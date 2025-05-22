@@ -14,8 +14,6 @@ jobs:
               run: |
                 docker compose version
                 docker --version
-                docker ps
-                docker logs $(docker ps -lq)
             
             - name: Set up Docker Buildx
               run: docker compose build --progress=plain
