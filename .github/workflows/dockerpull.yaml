@@ -23,7 +23,7 @@ jobs:
             - name: docker operations
               run: |
                 docker ps -a
-                docker logs my-container1  
+                docker logs my-container
 
             - name: logout from docker hub
               if: always()
