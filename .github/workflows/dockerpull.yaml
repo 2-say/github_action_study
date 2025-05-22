@@ -20,6 +20,7 @@ jobs:
               run: |
                 docker pull ${{ secrets.DOCKER_USERNAME }}/my-image:latest
                 docker run -d --name my-container ${{ secrets.DOCKER_USERNAME }}/my-image:latest
+                sleep 15
             - name: docker operations
               run: |
                 docker ps -a
