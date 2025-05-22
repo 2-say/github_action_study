@@ -4,5 +4,6 @@
 ### Java ###
 # Compiled class file
 ./build/*
+build/*
 
 

@@ -26,11 +26,11 @@ jobs:
               run: ls -l ./build/libs
             
             - name: chmod jar file
-              run: chmod +x ./build/libs/gradle-0.0.1-SNAPSHOT.jar
+              run: chmod +x ./build/libs/github-action-0.0.1-SNAPSHOT.jar
             
             - name: run springboot jar
               run: | 
-                java -jar ./build/libs/gradle-0.0.1-SNAPSHOT.jar & 
+                java -jar ./build/libs/github-action-0.0.1-SNAPSHOT.jar & 
                 sleep 20
               
             - name: run automated test
