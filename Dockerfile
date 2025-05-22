@@ -10,7 +10,7 @@ RUN gradle dependencies --no-daemon
 
 # 소스 코드 복사 및 빌드
 COPY src ./src
-RUN gradle bootJar --no-daemon -x test
+RUN gradle build --no-daemon -x test
 
 # 실행 단계
 FROM openjdk:17-jdk-slim
