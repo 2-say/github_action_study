@@ -1,10 +1,10 @@
-name: docker hub
+name: docker hub pull
 
 on:
   workflow_dispatch
 
 jobs:
-    docker-hub:
+    docker-hub-pull:
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout code
@@ -16,11 +16,14 @@ jobs:
                 username: ${{ secrets.DOCKER_USERNAME }}
                 password: ${{ secrets.DOCKER_PASSWORD }}
             
+            - name: docker pull and run
+              run: |
+                docker pull ${{ secrets.DOCKER_USERNAME }}/my-image:latest
+                docker run -d --name my-container ${{ secrets.DOCKER_USERNAME }}/my-image:latest
             - name: docker operations
               run: |
-                docker build -t my-image:latest .
-                docker tag my-image:latest ${{ secrets.DOCKER_USERNAME }}/my-image:latest
-                docker push ${{ secrets.DOCKER_USERNAME }}/my-image:latest
+                docker ps -a
+                docker logs my-container1  
 
             - name: logout from docker hub
               if: always()
