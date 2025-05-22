@@ -1,0 +1,33 @@
+name: docker compose build
+
+on:
+  workflow_dispatch
+
+jobs:
+    docker-compose-build:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            
+            - name: check docker compose version
+              run: |
+                docker-compose --version
+                docker --version
+                docker ps
+                docker logs $(docker ps -lq)
+            
+            - name: Set up Docker Buildx
+              run: docker compose build --progress=plain
+
+            - name: run with docker compose
+              run: |
+                docker compose up -d
+                sleep 15
+
+                docker compose ps
+                docker compose logs
+
+            - name: run automated test
+              run: |
+                curl -X GET http://localhost:8080/
