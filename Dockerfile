@@ -1,16 +1,19 @@
 # 빌드 단계
-FROM gradle:7.5.1-jdk17 AS build
+FROM openjdk:17-jdk-slim AS build
 
 WORKDIR /app
 
-# gradle 캐시를 활용하기 위해 필요한 파일 먼저 복사
-COPY build.gradle settings.gradle ./
+# gradle wrapper 파일 복사
+COPY gradlew .
 COPY gradle ./gradle
-RUN gradle dependencies --no-daemon
+COPY build.gradle settings.gradle ./
+
+# 의존성 캐시
+RUN ./gradlew dependencies --no-daemon
 
 # 소스 코드 복사 및 빌드
 COPY src ./src
-RUN gradle build --no-daemon -x test
+RUN ./gradlew build --no-daemon -x test
 
 # 실행 단계
 FROM openjdk:17-jdk-slim
@@ -24,4 +27,7 @@ ENV SERVER_PORT=8080
 
 EXPOSE 8080
 
+
+
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]
+
